@@ -26,9 +26,9 @@ namespace SuperHeroApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllHeroes()
+        public async Task<ActionResult<List<SuperHero>>> GetAllHeroes()
         { 
-            return Ok(_superHeroService.GetAllHeroes());
+            return await _superHeroService.GetAllHeroes();
         }
 
         [HttpGet]

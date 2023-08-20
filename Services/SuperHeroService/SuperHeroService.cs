@@ -1,26 +1,36 @@
-﻿namespace SuperHeroApi.Services.SuperHeroService
+﻿using SuperHeroApi.Models;
+using System.Collections.Generic;
+
+namespace SuperHeroApi.Services.SuperHeroService
 {
     public class SuperHeroService : ISuperHeroService
-    {
+    {   
         private static List<SuperHero> superHeroes = new List<SuperHero>
         {
             new SuperHero
             {
                 Id = 1,
-                Name = "Spider-Man",
-                FirstName = "Peter",
-                LastName = "Parker",
-                Place = "New York City"
+                Name = "spider-man",
+                FirstName = "peter",
+                LastName = "parker",
+                Place = "new york city"
             },
             new SuperHero
             {
                 Id = 2,
-                Name = "Iron Man",
-                FirstName = "Tony",
-                LastName = "Stark",
-                Place = "Malibu"
+                Name = "iron man",
+                FirstName = "tony",
+                LastName = "stark",
+                Place = "malibu"
             },
         };
+        
+        private readonly DataContext _context;
+
+        public SuperHeroService(DataContext context)
+        {
+            _context = context;
+        }
 
         public List<SuperHero> AddHero(SuperHero hero)
         {
@@ -28,9 +38,10 @@
             return superHeroes;
         }
 
-        public List<SuperHero> GetAllHeroes()
+        public async Task<List<SuperHero>> GetAllHeroes()
         {
-            return superHeroes;
+            var heroes = await _context.SuperHeroes.ToListAsync();
+            return heroes;
         }
 
         public SuperHero? GetHero(int id)
